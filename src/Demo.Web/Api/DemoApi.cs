@@ -18,19 +18,37 @@ namespace Demo.Web.Api
         {
             _appService = appService;
         }
-        
+
+        [HttpGet]
+        public MessageResult TestCache([FromServices] IDistributedCache cache)
+        {
+            var hashCode = cache.GetType().Name + ": " + cache.GetHashCode();
+            var testValue = cache.GetString("testKey");
+            if (testValue == null)
+            {
+                testValue = DateTime.Now.ToString("s");
+                cache.SetString("testKey", testValue, new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30),
+                    SlidingExpiration = TimeSpan.FromSeconds(10)
+                });
+                return MessageResult.Create("set cache " + hashCode, true, testValue);
+            }
+            return MessageResult.Create("read cache " + hashCode, true, testValue);
+        }
+
         [HttpGet]
         public List<DemoItem> GetItems()
         {
             return _appService.GetAll();
         }
-        
+
         [HttpGet]
-        public DemoItem GetItem([FromQuery]string id)
+        public DemoItem GetItem([FromQuery] string id)
         {
             return _appService.GetById(id);
         }
-        
+
         [HttpPost]
         public MessageResult Save([FromBody] DemoItem item)
         {

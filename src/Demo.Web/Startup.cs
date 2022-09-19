@@ -23,45 +23,9 @@ namespace Demo.Web
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NbSites", Version = "v1" });
             });
-
-            services.AddDemo();
-
-            //services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            //services.AddSingleton<IRedisCacheService, RedisCacheService>();
-            //services.AddDbContext<EmployeeContext>(options =>
-            //{
-            //    options.UseSqlServer(Configuration.GetConnectionString("EmployeeDB"),
-            //        sqlServerOptionsAction: sqlOptions =>
-            //        {
-            //            sqlOptions.EnableRetryOnFailure();
-            //        });
-            //});
- 
-            //services.AddStackExchangeRedisCache(options =>
-            //{
-            //    options.Configuration = $"{Configuration.GetValue<string>("RedisCache:Host")}:{Configuration.GetValue<int>("RedisCache:Port")}";
-            //});
-
-
             
-            //if (_hostEnvironment.IsDevelopment())
-            //{
-            //    services.AddDistributedMemoryCache();//Use this for only DEV testing purpose
-            //}
-            //else
-            //{
-            //    var multiplexer = ConnectionMultiplexer.Connect(new ConfigurationOptions
-            //    {
-            //        EndPoints =
-            //        {
-            //            $"{Configuration.GetValue<string>("RedisCache:Host")}:
-            //            {Configuration.GetValue<int>("RedisCache:Port")
-            //        }" }
-            //    });
-            //    services.AddSingleton<IConnectionMultiplexer>(multiplexer);
-            //    }
-            //}
-
+            services.AddDemo();
+            //services.AddDemo2();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
